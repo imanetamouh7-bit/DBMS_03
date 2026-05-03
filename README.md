@@ -294,7 +294,7 @@ sqlite3 library.db < schema.sql
 > **Screenshot 2:** Take a screenshot of the terminal showing the `.tables`
 > output and insert it here.
 >
-> `[insert screenshot]`
+![screenshot 2](screenshot2.png)
 
 ### Task 2c – Commit
 
