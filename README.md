@@ -176,14 +176,16 @@ Complete the sketch for all six relations (`author`, `book`, `writes`, `copy`,
 > relational model? What would go wrong if you stored multiple author IDs in a
 > single column of `book`?
 >
-> *Your answer:*
+The answer: We need a join table because one book has many authors and one author has many books.
+If we put many author IDs in one column, the data is messy and hard to use.
 
 > **Question 1.2:** `loan_id` is a surrogate key even though a loan might seem
 > to be uniquely identified by `(member_no, copy_no, loan_date)`. Name one
 > realistic scenario in which that composite key would fail to be a candidate
 > key.
 >
-> *Your answer:*
+the answer: A member can borrow the same copy again on the same day.
+Then (member_no, copy_no, loan_date) is not unique.
 
 ---
 
@@ -347,12 +349,13 @@ git log --oneline
 `writes`. What does this mean in practice if a librarian wants to delete an
 author who has written at least one book in the catalogue?
 
-> *Your answer:*
+the answer: The delete is not allowed.
+The author cannot be deleted because it is used in writes.
 
 **Question 2.2:** `email` in `member` is declared `UNIQUE` but is not the
 primary key. Using the vocabulary from Lecture 03, what kind of key is it?
 
-> *Your answer:*
+the answer: It is a candidate key.
 
 **Question 2.3:** SQLite does not enforce `CHECK` or `FOREIGN KEY` constraints
 by default. Run the following and observe what happens:
@@ -375,7 +378,7 @@ by default. Run the following and observe what happens:
 > the difference between a constraint declared in DDL and one actually enforced
 > at runtime?
 
-> *Your answer:*
+the answer: This shows: A constraint in DDL is only active if the system enforces it.
 
 ---
 
@@ -552,7 +555,8 @@ not in a `WHERE` clause. What would happen to Koch's row if you moved this
 condition into `WHERE return_date IS NULL`? Why? Refer to the formal definition
 of the outer join from Lecture 03.
 
-> *Your answer:*
+The answer: Koch will disappear. Because WHERE removes NULL rows.
+LEFT JOIN becomes like INNER JOIN.
 
 ### Task 4f – Set Difference
 
@@ -600,7 +604,8 @@ VALUES (999, 1, '2026-05-01');
 > **Question 5.1:** Which specific constraint fired? Name the table and the
 > foreign key column involved.
 >
-> *Your answer:*
+the answer: The constraint is in table loan.
+Column: member_no.
 
 ### Task 5b – Delete a member with active loans
 
@@ -616,7 +621,8 @@ DELETE FROM member WHERE member_no = 102;
 > `DELETE`. What happens to Schneider's loan row? Is this behaviour desirable
 > for a library system? Justify your answer.
 >
-> *Your answer:*
+the answer: The loan row will be deleted.
+This is not good because we lose data.
 
 ### Task 5c – Verify the composite primary key of `writes`
 
@@ -630,7 +636,8 @@ INSERT INTO writes VALUES (1, '978-0-201-96426-4');
 > here – but also a *primary key*. Can a relation have two candidate keys? Give
 > an example from the library schema.
 >
-> *Your answer:*
+the answer: Yes, a relation can have two candidate keys.
+Example: member has member_no and email.
 
 ---
 
@@ -779,7 +786,8 @@ joins. SQL does not prescribe an execution order; the query optimizer may
 reorder these joins freely. Under what condition would reordering a join change
 the *result* of a query? Under what condition is it always safe?
 
-> *Your answer:*
+the answer: If joins depend on order, result can change.
+If joins are independent, it is safe.
 
 **Question B – NULL semantics:**  
 `return_date` is `NULL` for an open loan. `NULL` in SQL does not mean zero or
@@ -787,7 +795,10 @@ false – it means *unknown*. Consider the query `WHERE return_date = NULL`.
 Will it return the open loans? Explain why or why not and write the correct
 form.
 
-> *Your answer:*
+the answer: No, it will not return rows.
+NULL is unknown.
+Correct:
+WHERE return_date IS NULL
 
 **Question C – Surrogate vs. natural key:**  
 `book` uses `isbn` as its natural primary key; all other entities use surrogate
@@ -795,7 +806,8 @@ integer keys. Suppose the library occasionally receives books without an ISBN
 (unpublished manuscripts, internal reports). How would this affect the `isbn`
 primary key? What design change would you make?
 
-> *Your answer:*
+The answer: ISBN cannot be primary key.
+We use a new ID as primary key.
 
 **Question D – Relational algebra limitations:**  
 Suppose the library wants to find all members who have borrowed the same copy
@@ -805,7 +817,9 @@ operators of the relational algebra (σ, π, ρ, ×, −) without aggregation?
 What does this tell you about the relationship between relational algebra and
 SQL?
 
-> *Your answer:*
+the answer: SQL uses self join.
+Relational algebra can do it but is harder.
+SQL is more powerful and easier.
 
 > **Screenshot 4:** Take a screenshot of your terminal showing the output of
 > the query from Task 4d (the join across four relations), and insert it here.
