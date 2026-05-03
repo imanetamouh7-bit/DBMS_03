@@ -570,7 +570,15 @@ $$\pi_{\mathrm{isbn}}(\textsc{book}) - \pi_{\mathrm{isbn}}\!\left(\textsc{copy} 
 In SQL, set difference is expressed with `EXCEPT`:
 
 ```sql
--- write your query here
+SELECT title
+FROM book
+WHERE isbn IN (
+    SELECT isbn FROM book
+    EXCEPT
+    SELECT c.isbn
+    FROM copy c
+    JOIN loan l ON c.copy_no = l.copy_no
+);
 ```
 
 > Expected result: *The C Programming Language* (copy 4 was never loaned).
