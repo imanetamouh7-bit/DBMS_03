@@ -810,7 +810,7 @@ SQL?
 > **Screenshot 4:** Take a screenshot of your terminal showing the output of
 > the query from Task 4d (the join across four relations), and insert it here.
 >
-> `[insert screenshot]`
+![Screenshot 4](screenshot4.png)
 
 ---
 
