@@ -473,7 +473,9 @@ $$\sigma_{\mathrm{shelf\_loc}\ \mathrm{LIKE}\ \texttt{'A\%'}}(\textsc{copy})$$
 SQL:
 
 ```sql
--- write your query here
+SELECT *
+FROM copy
+WHERE shelf_loc LIKE 'A%';
 ```
 
 > Expected result: copy\_no 1 and 2.
@@ -488,7 +490,8 @@ $$\pi_{\mathrm{title},\,\mathrm{pub\_year}}(\textsc{book})$$
 SQL:
 
 ```sql
--- write your query here
+SELECT title, pub_year
+FROM book;
 ```
 
 > Expected result: three rows, two columns each.
@@ -504,7 +507,9 @@ $$\pi_{\mathrm{isbn},\,\mathrm{shelf\_loc}}\!\left(\sigma_{\mathrm{shelf\_loc} \
 SQL:
 
 ```sql
--- write your query here
+SELECT isbn, shelf_loc
+FROM copy
+WHERE shelf_loc >= 'B';
 ```
 
 > Expected result: copy\_no 3 (B-07) and copy\_no 4 (C-12).
@@ -525,7 +530,12 @@ $$\pi_{\mathrm{full\_name},\,\mathrm{title}}\!\left(
 SQL:
 
 ```sql
--- write your query here
+SELECT m.full_name, b.title
+FROM loan l
+JOIN member m ON l.member_no = m.member_no
+JOIN copy c ON l.copy_no = c.copy_no
+JOIN book b ON c.isbn = b.isbn
+WHERE l.return_date IS NULL;
 ```
 
 > Expected result: two rows – Schneider borrowing *Database Management Systems*,
