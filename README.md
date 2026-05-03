@@ -366,7 +366,13 @@ by default. Run the following and observe what happens:
 > SELECT * FROM loan;
 > ```
 >
-> Then run:
+>Then run:
+```sql
+1|101|1|2026-04-09|2026-04-23
+2|102|3|2026-04-09|
+3|101|2|2026-04-16|
+4|9999|9999|2026-01-01|
+```
 >
 > ```sql
 > PRAGMA foreign_keys = ON;
