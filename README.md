@@ -735,7 +735,7 @@ If you have not used `scp` before, work through this exercise first:
 > **Screenshot 3:** Take a screenshot of `schema.svg` showing all six entities
 > and all five relationships, and insert it here.
 >
-> `[insert screenshot]`
+![Screenshot 3](screenshot3.png)
 
 Add `schema.svg` to `.gitignore` (it is generated, not authored):
 
